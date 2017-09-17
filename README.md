@@ -71,24 +71,25 @@ Since there’s no way to implement them in Windows, they have asbolutely no eff
 
 #### Int tcgetattr(int fd, struct termios *termios_p);
 	
-	Sets in the internal DCB structures the current serial port parameters, it 
-	always has to be invoked before using tcsetattr. Returns 0 if succeded, 	
-	otherwise -1.
+Sets in the internal DCB structures the current serial port parameters, it 
+always has to be invoked before using tcsetattr. Returns 0 if succeded, 	
+otherwise -1.
+
 #### int tcsetattr(int fd, int optional_actions, struct termios *termios_p);
 
   Reads the flags set in the termios structure and sets the properly 		
-	parameters in the DCB structure and eventually it applies the parameters	to the serial port. Returns 0 if succeded, otherwise     
-  -1.
+parameters in the DCB structure and eventually it applies the parameters to the serial port. 
+Returns 0 if succeded, otherwise -1.
 
 #### int tcsendbreak(int fd, int duration);
 
-  Sends a break character to the serial port; duration is not implemented. 	
-	Returns 0 if succeded, otherwise -1.
+Sends a break character to the serial port; duration is not implemented. 	
+Returns 0 if succeded, otherwise -1.
 
 #### int tcdrain(int fd);
 
-  Waits until all output written to the serial port has been transmitted.
-	Returns 0 if succeded, otherwise -1.
+Waits until all output written to the serial port has been transmitted.
+Returns 0 if succeded, otherwise -1.
 
 #### Int tcflush(int fd, int queue_selector);
 
@@ -97,7 +98,7 @@ Since there’s no way to implement them in Windows, they have asbolutely no eff
     TCOFLUSH 	(discards data written but still not transmitted), 
     TCIOFLUSH 	(discards both data received but still not read and data written but still not transmitted).
 
-	Returns 0 if succeded, otherwise -1.
+Returns 0 if succeded, otherwise -1.
 
 #### Int tcflow(int fd, int action);
 
@@ -106,7 +107,8 @@ Since there’s no way to implement them in Windows, they have asbolutely no eff
     TCIOFF	transmits a STOP character.      	
     TCION 	transmits a START character.
     TCOOF 	suspends output.
-	Returns 0 if succeded, otherwise -1.
+	
+Returns 0 if succeded, otherwise -1.
 
 #### Void cfmakeraw(struct termios *termios_p);
 
@@ -115,7 +117,7 @@ Since there’s no way to implement them in Windows, they have asbolutely no eff
   StopBits: one stop bit
   Parity: no parity
 
-	Use tcsetattr to commit them.
+Use tcsetattr to commit them.
 
 #### speed_t cfgetispeed(const struct termios *termios_p);
 	
@@ -123,53 +125,53 @@ Since there’s no way to implement them in Windows, they have asbolutely no eff
 
 #### speed_t cfgetospeed(const struct termios *termios_p);
 	
-  returns the output speed, speed can assume the same values of termios 	(B9600, B115200, …).
+  returns the output speed, speed can assume the same values of termios (B9600, B115200, …).
 
 #### int cfsetispeed(struct termios *termios_p, speed_t speed);
 
   Sets, but doesn’t commits the parameter of  speed for the serial port (in 	Windows there’s no distinction between input/output
-  /control), speed 	can assume the same values of termios 	(B9600, B115200, …). 		
+  /control), speed 	can assume the same values of termios (B9600, B115200, …). 		
   Returns 0 if succeded, otherwise -1.
 
 #### int cfsetospeed(struct termios *termios_p, speed_t speed);
 
   Sets, but doesn’t commits the parameter of speed for the 	serial port (in 	Windows there’s no distinction between input/output
-  /control), speed 	can assume the same values of termios 	(B9600, B115200, ...). 		
+  /control), speed 	can assume the same values of termios (B9600, B115200, ...). 		
   Returns 0 if succeded, otherwise -1.
 
 #### int cfsetsspeed(struct termios *termios_p, speed_t speed);
 
   Sets, but doesn’t commits the parameter of speed for the 	serial port (in 	Windows there’s no distinction between input/output
-  /control), speed 	can assume the same values of termios 	(B9600, B115200, ...). 		
+  /control), speed 	can assume the same values of termios (B9600, B115200, ...). 		
   Returns 0 if succeded, otherwise -1.
   
 ### Serial transmission/receiving - open/close Functions
   
 #### Int openSerial(char* portname, int opt);
 
-Open the serial port which name is portname with opt set for the port to 	be read only, write only or both read/write (O_RDONLY, 
+Open the serial port which name is portname with opt set for the port to be read only, write only or both read/write (O_RDONLY, 
 O_WRONLY, O_RDWR). Returns the file descriptor (fd is actually useless in Windows with serial ports, but is set for 
 compatibilty). The function can be called using open instead of openSerial (for termios compatibilty).
 
 #### Int closeSerial(int fd);
 
-Closes the serial port. Returns 0 if succeded, otherwise -1. The function 	can be called using close instead of closeSerial (for 
-termios 	compatibilty).
+Closes the serial port. Returns 0 if succeded, otherwise -1. The function can be called using close instead of closeSerial (for 
+termios compatibilty).
 
 #### Int writeToSerial(int fd, char* buffer, int count);
 
 Writes to serial “count” characters contained in buffer. Returns the 	number of transmitted characters or -1 if transmission 
-failed. The 	function can be called using write instead of writeToSerial (for 	termios compatibilty).
+failed. The 	function can be called using write instead of writeToSerial (for termios compatibilty).
 
 #### Int readFromSerial(int fd, char* buffer, int count);
 	
 Reads “count” bytes from serial port and put them into buffer. Returns 	the number of read bytes or -1 if read failed. The 
-function can be 	called using read instead of readFromSerial (for termios 	compatibilty).
+function can be 	called using read instead of readFromSerial (for termios compatibilty).
 
 #### Int selectSerial(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
 
-It behaves as termios select. Returns the file descriptor ready for the 	chosen operation or -1 if failed. The function can be 
-called using	select instead of selectSerial (for termios compatibility).
+It behaves as termios select. Returns the file descriptor ready for the chosen operation or -1 if failed. The function can be 
+called using select instead of selectSerial (for termios compatibility).
 
 ## License
 
