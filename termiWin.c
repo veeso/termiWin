@@ -500,7 +500,7 @@ int openSerial(char* portname, int opt) {
 
 	if (strlen(portname) < 4) return -1;
 
-	com.port = malloc(sizeof(char)*(strlen("\\\\.\\")+4));
+	com.port = calloc(1,sizeof(char)*(strlen("\\\\.\\")+4));
 	strncat(com.port, portname, 4);
 
 	switch (opt) {
@@ -514,7 +514,7 @@ int openSerial(char* portname, int opt) {
 		break;
 
 		case O_WRONLY:
-		CreateFile(com.port, GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
+		com.hComm = CreateFile(com.port, GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
 		break;
 
 	}

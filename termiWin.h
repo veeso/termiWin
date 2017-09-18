@@ -31,6 +31,7 @@
 #pragma comment(lib, "Ws2_32.lib")
 
 /*Redefining functions from winsock to termiWin. This is very important since winsock2 defines functions such as close as closesocket we have to redefine it*/
+
 #define read readFromSerial
 #define write writeToSerial
 #define select selectSerial
