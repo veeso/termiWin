@@ -10,13 +10,13 @@ This is possible because termios’s functions have been rewritten to be compati
 
 ### The termios Structure 
 
-This is the main structure of the library and it’s often passed as argument to the functions, it has the following members:
-  tcflag_t c_iflag; /*input modes*/
-  tcflag_t c_oflag; /*output modes*/
-  tcflag_t c_cflag; /*control modes*/
-  tcflag_t c_lflag; /*local modes*/
-  cc_t c_cc[NCCS]; /*special character*/
-where tcflag_t is defined as an unsigned integer.
+This is the main structure of the library and it’s often passed as argument to the functions, it has the following members:/br>
+  tcflag_t c_iflag; /*input modes*/</br>
+  tcflag_t c_oflag; /*output modes*/</br>
+  tcflag_t c_cflag; /*control modes*/</br>
+  tcflag_t c_lflag; /*local modes*/</br>
+  cc_t c_cc[NCCS]; /*special character*/</br>
+where tcflag_t is defined as an unsigned integer.</br>
 
 The members of termios structure are used to set and retrieve the serial port configuration parameters. 
 There five types of flags, sorted by mode; they are implemented in the same way as they are in termios, except for some, which  are not used.
