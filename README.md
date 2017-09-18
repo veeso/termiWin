@@ -10,7 +10,7 @@ This is possible because termios’s functions have been rewritten to be compati
 
 ### The termios Structure 
 
-This is the main structure of the library and it’s often passed as argument to the functions, it has the following members:/br>
+This is the main structure of the library and it’s often passed as argument to the functions, it has the following members:
   tcflag_t c_iflag; /*input modes*/</br>
   tcflag_t c_oflag; /*output modes*/</br>
   tcflag_t c_cflag; /*control modes*/</br>
