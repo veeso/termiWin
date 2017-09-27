@@ -15,7 +15,7 @@
 *   GNU General Public License for more details.
 *
 *   You should have received a copy of the GNU General Public License
-*   along with termiWin.  If not, see <http://www.gnu.org/licenses/>.
+*   along with Nome-Programma.  If not, see <http://www.gnu.org/licenses/>.
 *
 */
 
@@ -475,7 +475,7 @@ int readFromSerial(int fd, char* buffer, int count) {
 	int rc = 0;
 	int ret;
 
-	ret = ReadFile(com.hComm, &buffer, count, &rc, NULL);
+	ret = ReadFile(com.hComm, buffer, count, &rc, NULL);
 
 	if (ret == 0) return -1;
 	else return rc;
