@@ -1,4 +1,4 @@
-/* termiWin.c
+/* termiWin.h
 *
 * 	Copyright (C) 2017 Christian Visintin - christian.visintin1997@gmail.com
 *
