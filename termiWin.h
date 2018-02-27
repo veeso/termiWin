@@ -32,11 +32,13 @@
 
 /*Redefining functions from winsock to termiWin. This is very important since winsock2 defines functions such as close as closesocket we have to redefine it*/
 
+#ifndef TERMIWIN_DONOTREDEFINE
 #define read readFromSerial
 #define write writeToSerial
 #define select selectSerial
 #define open openSerial
 #define close closeSerial
+#endif
 
 //Serial options - Linux -> Windows
 
@@ -78,6 +80,8 @@
 #define CS6			0x00000400	/*This specifies six bits per byte. */
 #define CS7			0x00000800	/*This specifies seven bits per byte. */
 #define CS8			0x00000c00	/*This specifies eight bits per byte. */
+#define CLOCAL 	0x00000000 	/*Ignore modem control lines -> ignore data carrier detected - not implementable in windows*/
+#define CREAD 	0x00000000 /*Enable receiver - if is not set no character will be received*/
 
 //oFlag
 
@@ -108,7 +112,9 @@
 #define NCCS 11
 
 //Baud speed
+#define B110 CBR_110
 #define B300 CBR_300
+#define B600 CBR_600
 #define B1200 CBR_2400
 #define B2400 CBR_2400
 #define B4800 CBR_4800
