@@ -1,7 +1,7 @@
 # termiWin
 ### ~ A termios porting for Windows ~
 
-Current Version 1.1 (27/02/2018)
+Current Version 1.1.1 (02/03/2018)
 
 ## Introduction
 
@@ -202,6 +202,10 @@ It behaves as termios select.
 Returns the file descriptor ready for the chosen operation or -1 if failed.   
 The function can be called using select instead of selectSerial (for termios compatibility).
 
+#### HANDLE getHandle();  
+  
+Returns the HANDLE from the COM structure.  
+  
 ### Multiple serial communications
 
 At the moment is not possible to have more than one serial communication at the same time, this because it would be pretty complicated to implement in this library something which allows you to do that. I've thought of some solutions, but I'll try them when I have some time off.  
