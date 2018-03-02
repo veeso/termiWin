@@ -534,3 +534,8 @@ int closeSerial(int fd) {
 	else return -1;
 
 }
+
+//Returns hComm from the COM structure
+HANDLE getHandle() {
+	return com.hComm;
+}
