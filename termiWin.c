@@ -194,7 +194,7 @@ int tcsetattr(int fd, int optional_actions, const struct termios *termios_p) {
 	tcflag_t oflag = termios_p->c_oflag;
 
 	/*****************************************
-									iflag
+	iflag
 	*****************************************/
 
 	int IX = getIXOptions(iflag);
@@ -208,7 +208,7 @@ int tcsetattr(int fd, int optional_actions, const struct termios *termios_p) {
 	}
 
 	/*****************************************
-									lflag
+	lflag
 	*****************************************/
 
 	int EchoOpt = getEchoOptions(lflag);
@@ -218,7 +218,7 @@ int tcsetattr(int fd, int optional_actions, const struct termios *termios_p) {
 	//Missing parameters...
 
 	/*****************************************
-								cflag
+	cflag
 	*****************************************/
 
 	int CharSet = getCharSet(cflag);
@@ -279,7 +279,7 @@ int tcsetattr(int fd, int optional_actions, const struct termios *termios_p) {
 	}
 
 	/*****************************************
-									oflag
+	oflag
 	*****************************************/
 
 	/*int OP;
@@ -288,7 +288,7 @@ int tcsetattr(int fd, int optional_actions, const struct termios *termios_p) {
 	//Missing parameters...
 
 	/*****************************************
-						special characters
+	special characters
 	*****************************************/
 
 	if(termios_p->c_cc[VEOF] != 0) SerialParams.EofChar = (char) termios_p->c_cc[VEOF];
@@ -316,12 +316,10 @@ int tcsetattr(int fd, int optional_actions, const struct termios *termios_p) {
 
 	}
 
-
-
 	SetCommTimeouts(com.hComm,&timeouts);
 
 	/*****************************************
-									EOF
+	EOF
 	*****************************************/
 
 	ret = SetCommState(com.hComm,&SerialParams);
@@ -344,11 +342,7 @@ int tcsendbreak(int fd, int duration) {
 int tcdrain(int fd) {
 
 	if(fd != com.fd) return -1;
-	SetCommMask(com.hComm, EV_TXEMPTY);
-	DWORD dwEventMask;
-	WaitCommEvent(com.hComm, &dwEventMask, NULL);
-
-	return 0;
+	return FlushFileBuffers(com.hComm);
 
 }
 
