@@ -214,8 +214,9 @@ At the moment is not possible to have more than one serial communication at the 
 
 ## What is termiWin intended for?
 
-  termiWin is just a simple library which executes termios functions using Windows libsock functions, because of that, any particular behaviour in the communication with the serial device, could not work properly. **termiWin is intended just for simple communications**
-  When termiWin *can be* a good choice? ✅
+  termiWin is just a simple library which executes termios functions using Windows libsock functions, because of that, any particular behaviour in the communication with the serial device, could not work properly. **termiWin is intended just for simple communications**.  
+
+  When termiWin *can be* a good choice? ✅  
   * ✅ - When you have to do a quick project without particular requirements.
   * ✅ - When you don't need performance and high reliability.
   * ✅ - When the communication between you and the serial device doesn't require a particular configuration.
