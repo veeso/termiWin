@@ -210,7 +210,29 @@ Returns the HANDLE from the COM structure.
 
 At the moment is not possible to have more than one serial communication at the same time, this because it would be pretty complicated to implement in this library something which allows you to do that. I've thought of some solutions, but I'll try them when I have some time off.  
 
-**Improvements and advices are welcome**
+---
+
+## What is termiWin intended for?
+
+  termiWin is just a simple library which executes termios functions using Windows libsock functions, because of that, any particular behaviour in the communication with the serial device, could not work properly. **termiWin is intended just for simple communications**
+  When termiWin *can be* a good choice? ✅
+  * ✅ - When you have to do a quick project without particular requirements.
+  * ✅ - When you don't need performance and high reliability.
+  * ✅ - When the communication between you and the serial device doesn't require a particular configuration.
+
+  When termiWin **Is NOT** a good choice? ❌
+  * ❌ - When you need multiple device communications. termiWin just doesn't support this feature at the moment.
+  * ❌ - When you need performance - since termiWin has to convert termios to windows instructions, it won't be faster than a program with windows instructions wrote by the developer.
+  * ❌ - When you require particular configuration and to use particular functions (such as tcdrain, tcflush etc) - they could work, but I can't assure
+
+---
+
+## Contributions
+
+Everybody can contribute to this project, indeed any improvement will be appreciated.
+
+### Is termiWin still supported?
+Well, I'm not working on it anymore, but I will answer to your questions and I will submit pull requests if they can be an improvement to the library.
 
 ## License
 
