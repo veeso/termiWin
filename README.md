@@ -176,7 +176,8 @@ The supported speeds are the the following (not all speeds could be implemented 
 
 Open the serial port which name is portname with opt set for the port to be read only, write only or both read/write (O_RDONLY,
 O_WRONLY, O_RDWR). Returns the file descriptor (fd is actually useless in Windows with serial ports, but is set for
-compatibilty). The function can be called using open instead of openSerial (for termios compatibilty).   
+compatibilty). The function can be called using open instead of openSerial (for termios compatibilty).  
+The portname must be in the format "COMnumber" (e.g. COM2, COM11).   
 
 #### Int closeSerial(int fd);
 
