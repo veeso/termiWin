@@ -1,7 +1,7 @@
 # termiWin
 ### ~ A termios porting for Windows ~
 
-Current Version 1.1.2 (08/03/2018)
+Current Version 1.1.3 (07/04/2018)
 
 ## Introduction
 
