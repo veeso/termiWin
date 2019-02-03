@@ -1,5 +1,7 @@
 # termiWin
 
+[![HitCount](http://hits.dwyl.io/ChristianVisintin/termiWin.svg)](http://hits.dwyl.io/ChristianVisintin/termiWin) [![Stars](https://img.shields.io/github/stars/ChristianVisintin/termiWin.svg)](https://github.com/ChristianVisintin/termiWin) [![Issues](https://img.shields.io/github/issues/ChristianVisintin/termiWin.svg)](https://github.com/ChristianVisintin/termiWin) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/ChristianVisintin/termiWin/issues)
+
 ~ A termios porting for Windows ~
 
 Current Version 1.1.4 (03/11/2018)
