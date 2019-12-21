@@ -1,0 +1,4 @@
+language: c
+os: windows
+script:
+  - gcc -c termiWin.c
