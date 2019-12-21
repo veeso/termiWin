@@ -21,7 +21,10 @@
 
 #ifndef TERMIWIN_H_
 #define TERMIWIN_H_
-#endif
+
+#define TERMIWIN_VERSION "1.2.0"
+#define TERMIWIN_MAJOR_VERSION 1
+#define TERMIWIN_MINOR_VERSION 2
 
 #ifdef _WIN32
 
@@ -189,4 +192,6 @@ HANDLE getHandle();
 
 #ifndef _WIN32
 #pragma message("-Warning: termiWin requires a Windows system!")
+#endif
+
 #endif

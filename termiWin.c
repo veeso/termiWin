@@ -1,8 +1,8 @@
 /* termiWin.c
 *
-* 	Copyright (C) 2017 Christian Visintin - christian.visintin1997@gmail.com
+*   Copyright (C) 2017 Christian Visintin - christian.visintin1997@gmail.com
 *
-* 	This file is part of "termiWin: a termios porting for Windows"
+*   This file is part of "termiWin: a termios porting for Windows"
 *
 *   termiWin is free software: you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
 */
 
 #include "termiWin.h"
+
+#ifdef _WIN32
 #include <fcntl.h>
 #include <stdlib.h>
 
@@ -35,7 +37,8 @@ COMMTIMEOUTS timeouts = { 0 }; //Initializing COMMTIMEOUTS structure
 
 //LOCAL functions
 
-/*nbyte 0->7*/
+//nbyte 0->7
+
 int getByte(tcflag_t flag, int nbyte, int nibble) {
 
   int byte;
@@ -185,9 +188,7 @@ int tcsetattr(int fd, int optional_actions, const struct termios* termios_p) {
   tcflag_t cflag = termios_p->c_cflag;
   tcflag_t oflag = termios_p->c_oflag;
 
-  /*****************************************
-	iflag
-	*****************************************/
+  //iflag
 
   int IX = getIXOptions(iflag);
 
@@ -198,19 +199,14 @@ int tcsetattr(int fd, int optional_actions, const struct termios* termios_p) {
     SerialParams.fTXContinueOnXoff = TRUE;
   }
 
-  /*****************************************
-	lflag
-	*****************************************/
-
+  //lflag
   int EchoOpt = getEchoOptions(lflag);
   int l_opt = getLocalOptions(lflag);
   int tostop = getToStop(lflag);
 
   //Missing parameters...
 
-  /*****************************************
-	cflag
-	*****************************************/
+  //cflags
 
   int CharSet = getCharSet(cflag);
   int c_opt = getControlOptions(cflag);
@@ -267,18 +263,16 @@ int tcsetattr(int fd, int optional_actions, const struct termios* termios_p) {
     break;
   }
 
-  /*****************************************
-	oflag
-	*****************************************/
+  //aflags
 
-  /*int OP;
-	if(oflag == OPOST)
-	else ...*/
+  /*
+  int OP;
+  if(oflag == OPOST)
+  else ...
+  */
   //Missing parameters...
 
-  /*****************************************
-	special characters
-	*****************************************/
+  //special characters
 
   if (termios_p->c_cc[VEOF] != 0) SerialParams.EofChar = (char)termios_p->c_cc[VEOF];
   if (termios_p->c_cc[VINTR] != 0) SerialParams.EvtChar = (char)termios_p->c_cc[VINTR];
@@ -291,9 +285,7 @@ int tcsetattr(int fd, int optional_actions, const struct termios* termios_p) {
     timeouts.WriteTotalTimeoutConstant = 0;   // in milliseconds
     timeouts.WriteTotalTimeoutMultiplier = 0; // in milliseconds
 
-  }
-
-  else { //Non blocking
+  } else { //Non blocking
 
     timeouts.ReadIntervalTimeout = termios_p->c_cc[VTIME] * 100;         // in milliseconds
     timeouts.ReadTotalTimeoutConstant = termios_p->c_cc[VTIME] * 100;    // in milliseconds
@@ -304,9 +296,7 @@ int tcsetattr(int fd, int optional_actions, const struct termios* termios_p) {
 
   SetCommTimeouts(com.hComm, &timeouts);
 
-  /*****************************************
-	EOF
-	*****************************************/
+  //EOF
 
   ret = SetCommState(com.hComm, &SerialParams);
   if (ret != 0)
@@ -478,16 +468,27 @@ int openSerial(char* portname, int opt) {
   if (strlen(portname) < 4) return -1;
 
   //COMxx
+  size_t portSize = 0;
   if (strlen(portname) > 4) {
-    com.port = calloc(1, sizeof(char) * strlen("\\\\.\\COM10") + 1);
+    portSize = sizeof(char) * strlen("\\\\.\\COM10") + 1;
+    com.port = calloc(1, portSize);
+#ifdef _MSC_VER
+    strncat_s(com.port, portSize, "\\\\.\\", strlen("\\\\.\\"));
+#else
     strncat(com.port, "\\\\.\\", strlen("\\\\.\\"));
+#endif
   }
   //COMx
   else {
-    com.port = calloc(1, sizeof(char) * 5);
+    portSize = sizeof(char) * 5;
+    com.port = calloc(1, portSize);
   }
 
+#ifdef _MSC_VER
+  strncat_s(com.port, portSize, portname, 4);
+#else
   strncat(com.port, portname, 4);
+#endif
 
   switch (opt) {
 
@@ -525,3 +526,5 @@ int closeSerial(int fd) {
 HANDLE getHandle() {
   return com.hComm;
 }
+
+#endif
