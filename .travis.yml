@@ -1,4 +1,4 @@
 language: c
 os: windows
 script:
-  - gcc -c termiWin.c
+  - gcc -c termiWin.c -D TERMIWIN_DONOTREDEFINE
