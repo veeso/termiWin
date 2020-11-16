@@ -200,8 +200,6 @@ int select_serial(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds
 //get Handle out of the COM structure
 HANDLE getHandle();
 
-
-
 #endif
 
 #ifndef _WIN32

@@ -31,7 +31,7 @@ Current Version 1.2.1 (16/11/2020)
       - [cfsetospeed](#cfsetospeed)
       - [cfsetsspeed](#cfsetsspeed)
       - [Supported speed](#supported-speed)
-    - [Serial transmission/receiving - open/close Functions](#serial-transmissionreceiving---openclose-functions)
+    - [Extra functions](#extra-functions)
       - [open_serial](#open_serial)
       - [close_serial](#close_serial)
       - [write_serial](#write_serial)
@@ -269,7 +269,7 @@ The supported speeds are the the following (not all speeds could be implemented 
 - B57600
 - B115200
 
-### Serial transmission/receiving - open/close Functions
+### Extra functions
 
 **You can use open/close/write/read instead of these names by default. If it causes to you conflicts with another library you can deactivate these definitions defining in your project:**
 
