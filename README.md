@@ -1,10 +1,10 @@
 # termiWin
 
-[![HitCount](http://hits.dwyl.io/ChristianVisintin/termiWin.svg)](http://hits.dwyl.io/ChristianVisintin/termiWin) [![Stars](https://img.shields.io/github/stars/ChristianVisintin/termiWin.svg)](https://github.com/ChristianVisintin/termiWin) [![Issues](https://img.shields.io/github/issues/ChristianVisintin/termiWin.svg)](https://github.com/ChristianVisintin/termiWin) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/ChristianVisintin/termiWin/issues) [![Build](https://api.travis-ci.org/ChristianVisintin/termiWin.svg?branch=master)](https://github.com/ChristianVisintin/termiWin)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Stars](https://img.shields.io/github/stars/ChristianVisintin/termiWin.svg)](https://github.com/ChristianVisintin/termiWin) [![Issues](https://img.shields.io/github/issues/ChristianVisintin/termiWin.svg)](https://github.com/ChristianVisintin/termiWin) [![Build](https://api.travis-ci.org/ChristianVisintin/termiWin.svg?branch=master)](https://travis-ci.org/github/ChristianVisintin/termiWin)
 
 ~ A termios porting for Windows ~
 
-Current Version 1.2.0 (21/12/2019)
+Current Version 1.2.1 (16/11/2020)
 
 - [termiWin](#termiwin)
   - [Introduction](#introduction)
@@ -18,32 +18,29 @@ Current Version 1.2.0 (21/12/2019)
       - [Output modes flags](#output-modes-flags)
       - [Special character array](#special-character-array)
     - [Serial configuration functions](#serial-configuration-functions)
-      - [Int tcgetattr(int fd, struct termios *termios_p)](#int-tcgetattrint-fd-struct-termios-termiosp)
-      - [int tcsetattr(int fd, int optional_actions, struct termios *termios_p)](#int-tcsetattrint-fd-int-optionalactions-struct-termios-termiosp)
-      - [int tcsendbreak(int fd, int duration)](#int-tcsendbreakint-fd-int-duration)
-      - [int tcdrain(int fd)](#int-tcdrainint-fd)
-      - [Int tcflush(int fd, int queue_selector)](#int-tcflushint-fd-int-queueselector)
-      - [Int tcflow(int fd, int action)](#int-tcflowint-fd-int-action)
-      - [Void cfmakeraw(struct termios *termios_p)](#void-cfmakerawstruct-termios-termiosp)
-      - [speed_t cfgetispeed(const struct termios *termios_p)](#speedt-cfgetispeedconst-struct-termios-termiosp)
-      - [speed_t cfgetospeed(const struct termios *termios_p)](#speedt-cfgetospeedconst-struct-termios-termiosp)
-      - [int cfsetispeed(struct termios *termios_p, speed_t speed)](#int-cfsetispeedstruct-termios-termiosp-speedt-speed)
-      - [int cfsetospeed(struct termios *termios_p, speed_t speed)](#int-cfsetospeedstruct-termios-termiosp-speedt-speed)
-      - [int cfsetsspeed(struct termios *termios_p, speed_t speed)](#int-cfsetsspeedstruct-termios-termiosp-speedt-speed)
+      - [tcgetattr](#tcgetattr)
+      - [tcsetattr](#tcsetattr)
+      - [tcsendbreak](#tcsendbreak)
+      - [tcdrain](#tcdrain)
+      - [tcflush](#tcflush)
+      - [tcflow](#tcflow)
+      - [cfmakeraw](#cfmakeraw)
+      - [cfgetispeed](#cfgetispeed)
+      - [cfgetospeed](#cfgetospeed)
+      - [cfsetispeed](#cfsetispeed)
+      - [cfsetospeed](#cfsetospeed)
+      - [cfsetsspeed](#cfsetsspeed)
       - [Supported speed](#supported-speed)
     - [Serial transmission/receiving - open/close Functions](#serial-transmissionreceiving---openclose-functions)
-      - [Int openSerial(char- portname, int opt)](#int-openserialchar--portname-int-opt)
-      - [Int closeSerial(int fd)](#int-closeserialint-fd)
-      - [Int writeToSerial(int fd, char- buffer, int count)](#int-writetoserialint-fd-char--buffer-int-count)
-      - [Int readFromSerial(int fd, char- buffer, int count)](#int-readfromserialint-fd-char--buffer-int-count)
-      - [Int selectSerial(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout)](#int-selectserialint-nfds-fdset-readfds-fdset-writefds-fdset-exceptfds-struct-timeval-timeout)
-      - [HANDLE getHandle()](#handle-gethandle)
+      - [open_serial](#open_serial)
+      - [close_serial](#close_serial)
+      - [write_serial](#write_serial)
+      - [read_serial](#read_serial)
+      - [getHandle](#gethandle)
     - [Multiple serial communications](#multiple-serial-communications)
   - [What is termiWin intended for](#what-is-termiwin-intended-for)
   - [Contributions](#contributions)
-    - [Is termiWin still supported](#is-termiwin-still-supported)
   - [Changelog](#changelog)
-    - [1.2.0 (21.12.2019)](#120-21122019)
   - [License](#license)
 
 ## Introduction
@@ -70,15 +67,17 @@ It's enough to include termios.h, termiWin.h and termiWin.c to build the project
 
 This is the main structure of the library and it’s often passed as argument to the functions, it has the following members:
 
-- tcflag_t c_iflag; /\*input modes\*/
-- tcflag_t c_oflag; /\*output modes\*/
-- tcflag_t c_cflag; /\*control modes\*/
-- tcflag_t c_lflag; /\*local modes\*/
-- cc_t c_cc[NCCS]; /\*special character\*/
+```c
+tcflag_t c_iflag; /*input modes*/
+tcflag_t c_oflag; /*output modes*/
+tcflag_t c_cflag; /*control modes*/
+tcflag_t c_lflag; /*local modes*/
+cc_t c_cc[NCCS]; /* special character */
+```
 
 where tcflag_t is defined as an unsigned integer.
 
-The members of termios structure are used to set and retrieve the serial port configuration parameters.
+The members of termios structure are used to set and retrieve the serial port configuration parameters.  
 There five types of flags, sorted by mode; they are implemented in the same way as they are in termios, except for some, which  are not used.
 
 #### Input modes flags
@@ -91,7 +90,7 @@ There five types of flags, sorted by mode; they are implemented in the same way 
 - IGNCR – Not implemented.
 - ICRNL – Not implemented.
 - INLCR – Not implemented.
-- IXOFF - If this bit is set, start/stop control on input is enabled. In other words, the computer sends STOP and START            characters as necessary to prevent input from coming in faster than programs are reading it. The idea is that the actual terminal hardware that is generating the input data responds to a STOP character by suspending transmission, and to a START character by  resuming transmission.
+- IXOFF - If this bit is set, start/stop control on input is enabled. In other words, the computer sends STOP and START characters as necessary to prevent input from coming in faster than programs are reading it. The idea is that the actual terminal hardware that is generating the input data responds to a STOP character by suspending transmission, and to a START character by  resuming transmission.
 - IXON - If this bit is set, start/stop control on output is enabled. In other words, if the computer receives a STOP character, it suspends output until a START character is received. In this case, the STOP and START characters are never passed to the application program. If this bit is not set, then START and STOP can be read as ordinary characters.
 
 #### Local modes flags
@@ -131,29 +130,47 @@ Since there’s no way to implement them in Windows, they have asbolutely no eff
 
 ### Serial configuration functions
 
-#### Int tcgetattr(int fd, struct termios \*termios_p)
+#### tcgetattr
 
-Sets in the internal DCB structures the current serial port parameters, it
-always has to be invoked before using tcsetattr.  
+```c
+int tcgetattr(int fd, struct termios *termios_p)
+```
+
+Sets in the internal DCB structures the current serial port parameters, it always has to be invoked before using tcsetattr.  
 Returns 0 if succeded, otherwise -1.
 
-#### int tcsetattr(int fd, int optional_actions, struct termios \*termios_p)
+#### tcsetattr
 
- Reads the flags set in the termios structure and sets the properly
-parameters in the DCB structure and eventually it applies the parameters to the serial port.
+```c
+int tcsetattr(int fd, int optional_actions, struct termios *termios_p)
+```
+
+Reads the flags set in the termios structure and sets the properly parameters in the DCB structure and eventually it applies the parameters to the serial port.  
 Returns 0 if succeded, otherwise -1.
 
-#### int tcsendbreak(int fd, int duration)
+#### tcsendbreak
 
-Sends a break character to the serial port; duration is not implemented.
+```c
+int tcsendbreak(int fd, int duration)
+```
+
+Sends a break character to the serial port; duration is not implemented.  
 Returns 0 if succeded, otherwise -1.
 
-#### int tcdrain(int fd)
+#### tcdrain
 
-Waits until all output written to the serial port has been transmitted.
+```c
+int tcdrain(int fd)
+```
+
+Waits until all output written to the serial port has been transmitted.  
 Returns 0 if succeded, otherwise -1.
 
-#### Int tcflush(int fd, int queue_selector)
+#### tcflush
+
+```c
+int tcflush(int fd, int queue_selector)
+```
 
 Discards data on serial port. queue_selector can assume the following values:
 
@@ -161,9 +178,13 @@ Discards data on serial port. queue_selector can assume the following values:
 - TCOFLUSH (discards data written but still not transmitted),
 - TCIOFLUSH (discards both data received but still not read and data written but still not transmitted).
 
-Returns 0 if succeded, otherwise -1.  
+Returns 0 if succeded, otherwise -1.
 
-#### Int tcflow(int fd, int action)
+#### tcflow
+
+```c
+int tcflow(int fd, int action)
+```
 
 Suspends transmission or receptions of data on serial port based on action. Action can assume the following values:
 
@@ -174,7 +195,11 @@ Suspends transmission or receptions of data on serial port based on action. Acti
 
 Returns 0 if succeded, otherwise -1.
 
-#### Void cfmakeraw(struct termios \*termios_p)
+#### cfmakeraw
+
+```c
+void cfmakeraw(struct termios *termios_p)
+```
 
 Sets but doesn’t commit the following options for the serial port:
 
@@ -184,32 +209,48 @@ Sets but doesn’t commit the following options for the serial port:
 
 Use tcsetattr to commit them.  
 
-#### speed_t cfgetispeed(const struct termios \*termios_p)
+#### cfgetispeed
 
-  Returns the input speed, speed can assume the same values of termios (B9600, B115200, …).
+```c
+speed_t cfgetispeed(const struct termios *termios_p)
+```
 
-#### speed_t cfgetospeed(const struct termios \*termios_p)
+Returns the input speed, speed can assume the same values of termios (B9600, B115200, …).
 
-  returns the output speed, speed can assume the same values of termios (B9600, B115200, …).
+#### cfgetospeed
 
-#### int cfsetispeed(struct termios \*termios_p, speed_t speed)
+```c
+speed_t cfgetospeed(const struct termios *termios_p)
+```
 
-  Sets, but doesn’t commits the parameter of  speed for the serial port (in Windows there’s no distinction between
-     input/output /control), speed can assume the same values of termios (B9600, B115200, …).
+returns the output speed, speed can assume the same values of termios (B9600, B115200, …).
 
-  Returns 0 if succeded, otherwise -1.
+#### cfsetispeed
 
-#### int cfsetospeed(struct termios \*termios_p, speed_t speed)
+```c
+int cfsetispeed(struct termios *termios_p, speed_t speed)
+```
 
-  Sets, but doesn’t commits the parameter of speed for the serial port (in Windows there’s no distinction between input/output
-  /control), speed can assume the same values of termios (B9600, B115200, ...).
-  Returns 0 if succeded, otherwise -1.
+Sets, but doesn’t commits the parameter of  speed for the serial port (in Windows there’s no distinction between input/output /control), speed can assume the same values of termios (B9600, B115200, …).  
+Returns 0 if succeded, otherwise -1.
 
-#### int cfsetsspeed(struct termios \*termios_p, speed_t speed)
+#### cfsetospeed
 
-  Sets, but doesn’t commits the parameter of speed for the serial port (in Windows there’s no distinction between input/output
-  /control), speed can assume the same values of termios (B9600, B115200, ...).
-  Returns 0 if succeded, otherwise -1.
+```c
+int cfsetospeed(struct termios *termios_p, speed_t speed)
+```
+
+Sets, but doesn’t commits the parameter of speed for the serial port (in Windows there’s no distinction between input/output /control), speed can assume the same values of termios (B9600, B115200, ...).  
+Returns 0 if succeded, otherwise -1.
+
+#### cfsetsspeed
+
+```c
+int cfsetsspeed(struct termios \*termios_p, speed_t speed)
+```
+
+Sets, but doesn’t commits the parameter of speed for the serial port (in Windows there’s no distinction between input/output /control), speed can assume the same values of termios (B9600, B115200, ...).  
+Returns 0 if succeded, otherwise -1.
 
 #### Supported speed
 
@@ -229,49 +270,63 @@ The supported speeds are the the following (not all speeds could be implemented 
 
 ### Serial transmission/receiving - open/close Functions
 
-**You can use open/close/write/read/select instead of these names by default. If it causes to you conflicts with another library you can deactivate these definitions defining in your project:**
+**You can use open/close/write/read instead of these names by default. If it causes to you conflicts with another library you can deactivate these definitions defining in your project:**
 
-```C
+```c
 #define TERMIWIN_DONOTREDEFINE  
 ```
 
-#### Int openSerial(char- portname, int opt)
+#### open_serial
+
+```c
+int open_serial(const char* portname, int opt)
+```
 
 Open the serial port which name is portname with opt set for the port to be read only, write only or both read/write (O_RDONLY,
 O_WRONLY, O_RDWR). Returns the file descriptor (fd is actually useless in Windows with serial ports, but is set for
 compatibilty). The function can be called using open instead of openSerial (for termios compatibilty).  
 The portname must be in the format "COMnumber" (e.g. COM2, COM11).
 
-#### Int closeSerial(int fd)
+#### close_serial
+
+```c
+int close_serial(int fd)
+```
 
 Closes the serial port.
 Returns 0 if succeded, otherwise -1. The function can be called using close instead of closeSerial. (for termios compatibilty).
 
-#### Int writeToSerial(int fd, char- buffer, int count)
+#### write_serial
+
+```c
+ssize_t write_serial(int fd, char* buffer, size_t count)
+```
 
 Writes to serial “count” characters contained in buffer.
 Returns the number of transmitted characters or -1 if transmission  failed.
 The function can be called using write instead of writeToSerial (for termios compatibilty).
 
-#### Int readFromSerial(int fd, char- buffer, int count)
+#### read_serial
+
+```c
+ssize_t read_serial(int fd, char* buffer, size_t count)
+```
 
 Reads “count” bytes from serial port and put them into buffer.
 Returns the number of read bytes or -1 if read failed.
 The function can be called using read instead of readFromSerial (for termios compatibilty).
 
-#### Int selectSerial(int nfds, fd_set \*readfds, fd_set \*writefds, fd_set \*exceptfds, struct timeval \*timeout)
+#### getHandle
 
-It behaves as termios select.
-Returns the file descriptor ready for the chosen operation or -1 if failed.
-The function can be called using select instead of selectSerial (for termios compatibility).
-
-#### HANDLE getHandle()
+```c
+HANDLE getHandle()
+```
 
 Returns the HANDLE from the COM structure.  
 
 ### Multiple serial communications
 
-At the moment is not possible to have more than one serial communication at the same time, this because it would be pretty complicated to implement in this library something which allows you to do that. I've thought of some solutions, but I'll try them when I have some time off.  
+At the moment is not possible to have more than one serial communication at the same time. I have never implemented this feature and probably I won't.
 
 ---
 
@@ -285,7 +340,7 @@ When termiWin *can be* a good choice? ✅
 - ✅ - When you don't need performance and high reliability.
 - ✅ - When the communication between you and the serial device doesn't require a particular configuration.
 
-When termiWin **Is NOT** a good choice? ❌
+When termiWin **is NOT** a good choice? ❌
 
 - ❌ - When you need multiple device communications. termiWin just doesn't support this feature at the moment.
 - ❌ - When you need performance - since termiWin has to convert termios to windows instructions, it won't be faster than a program with windows instructions wrote by the developer.
@@ -297,20 +352,9 @@ When termiWin **Is NOT** a good choice? ❌
 
 Everybody can contribute to this project, indeed any improvement will be appreciated.
 
-### Is termiWin still supported
-
-Well, I'm not working on it anymore, but I will answer to your questions and I will submit pull requests if they can be an improvement to the library.
-
 ## Changelog
 
-### 1.2.0 (21.12.2019)
-
-- Don't build on Linux/MacOS
-- Termios header
-- Fixed ifndef in termiWin.h
-- Added strncat_s to build on Visual Studio without enabling unsafe code
-- Added termiWin version macros (TERMIWIN_VERSION, TERMIWIN_MAJOR_VERSION, TERMIWIN_MINOR_VERSION)
-- Added travis-CI.yml to project
+View [CHANGELOG](CHANGELOG.md)
 
 ## License
 
