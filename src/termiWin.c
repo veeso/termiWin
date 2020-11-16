@@ -512,6 +512,26 @@ int close_serial(int fd) {
     return -1;
 }
 
+int serial_select(int nfds, fd_set* readfds, fd_set* writefds, fd_set* exceptfds, struct timeval* timeout) {
+
+  SetCommMask(com.hComm, EV_RXCHAR);
+  DWORD dwEventMask;
+  if (WaitCommEvent(com.hComm, &dwEventMask, NULL) == 0) {
+    return -1; // Return -1 if failed
+  }
+  if (dwEventMask == EV_RXCHAR) {
+    return com.fd;
+  } else {
+    if (readfds) {
+      // Clear file descriptor if event is not RXCHAR
+      FD_CLR(readfds);
+    }
+  }
+  // NOTE: write event not detectable!
+  // NOTE: no timeout
+  return 0; // No data
+}
+
 //Returns hComm from the COM structure
 HANDLE getHandle() {
   return com.hComm;

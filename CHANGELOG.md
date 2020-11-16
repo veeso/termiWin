@@ -12,6 +12,7 @@
   - `writeToSerial` => `write_serial`
   - `readFromSerial` => `read_serial`
   - `closeSerial` => `close_serial`
+  - `selectSerial` => `select_serial`
 - `open_serial` use `const char*` device name
 - cmake build
 

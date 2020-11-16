@@ -195,6 +195,7 @@ ssize_t read_serial(int fd, char* buffer, size_t count);
 ssize_t write_serial(int fd, char* buffer, size_t count);
 int open_serial(const char* portname, int opt);
 int close_serial(int fd);
+int select_serial(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
 
 //get Handle out of the COM structure
 HANDLE getHandle();

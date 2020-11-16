@@ -36,6 +36,7 @@ Current Version 1.2.1 (16/11/2020)
       - [close_serial](#close_serial)
       - [write_serial](#write_serial)
       - [read_serial](#read_serial)
+      - [select_serial](#select_serial)
       - [getHandle](#gethandle)
     - [Multiple serial communications](#multiple-serial-communications)
   - [What is termiWin intended for](#what-is-termiwin-intended-for)
@@ -315,6 +316,16 @@ ssize_t read_serial(int fd, char* buffer, size_t count)
 Reads “count” bytes from serial port and put them into buffer.
 Returns the number of read bytes or -1 if read failed.
 The function can be called using read instead of readFromSerial (for termios compatibilty).
+
+#### select_serial
+
+```c
+int select_serial(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout)
+```
+
+It behaves as termios select.
+Returns the file descriptor ready for the chosen operation or -1 if failed.
+The function can be called using select instead of selectSerial (for termios compatibility).
 
 #### getHandle
 
