@@ -36,10 +36,11 @@
 /*Redefining functions from winsock to termiWin. This is very important since winsock2 defines functions such as close as closesocket we have to redefine it*/
 
 #ifndef TERMIWIN_DONOTREDEFINE
-#define read readFromSerial
-#define write writeToSerial
-#define open openSerial
-#define close closeSerial
+#define read read_serial
+#define write serial_write
+#define open open_serial
+#define close close_serial
+#define select select_serial
 #endif
 
 // ssize_t

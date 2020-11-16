@@ -512,7 +512,7 @@ int close_serial(int fd) {
     return -1;
 }
 
-int serial_select(int nfds, fd_set* readfds, fd_set* writefds, fd_set* exceptfds, struct timeval* timeout) {
+int select_serial(int nfds, fd_set* readfds, fd_set* writefds, fd_set* exceptfds, struct timeval* timeout) {
 
   SetCommMask(com.hComm, EV_RXCHAR);
   DWORD dwEventMask;
