@@ -191,8 +191,8 @@ int cfsetspeed(struct termios * termios_p, speed_t speed);
 
 //Write/Read/Open/Close/Select Functions
 
-ssize_t read_serial(int fd, char* buffer, size_t count);
-ssize_t write_serial(int fd, char* buffer, size_t count);
+ssize_t read_serial(int fd, void* buffer, size_t count);
+ssize_t write_serial(int fd, const void* buffer, size_t count);
 int open_serial(const char* portname, int opt);
 int close_serial(int fd);
 int select_serial(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);

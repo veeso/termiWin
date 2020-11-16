@@ -423,7 +423,7 @@ int cfsetspeed(struct termios* termios_p, speed_t speed) {
   return 0;
 }
 
-ssize_t read_serial(int fd, char* buffer, size_t count) {
+ssize_t read_serial(int fd, void* buffer, size_t count) {
 
   if (fd != com.fd) return -1;
   int rc = 0;
@@ -437,7 +437,7 @@ ssize_t read_serial(int fd, char* buffer, size_t count) {
     return rc;
 }
 
-ssize_t write_serial(int fd, char* buffer, size_t count) {
+ssize_t write_serial(int fd, const void* buffer, size_t count) {
 
   if (fd != com.fd) return -1;
   int rc = 0;

@@ -300,7 +300,7 @@ Returns 0 if succeded, otherwise -1. The function can be called using close inst
 #### write_serial
 
 ```c
-ssize_t write_serial(int fd, char* buffer, size_t count)
+ssize_t write_serial(int fd, const void* buffer, size_t count)
 ```
 
 Writes to serial “count” characters contained in buffer.
@@ -310,7 +310,7 @@ The function can be called using write instead of writeToSerial (for termios com
 #### read_serial
 
 ```c
-ssize_t read_serial(int fd, char* buffer, size_t count)
+ssize_t read_serial(int fd, void* buffer, size_t count)
 ```
 
 Reads “count” bytes from serial port and put them into buffer.
