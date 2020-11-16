@@ -38,9 +38,23 @@
 #ifndef TERMIWIN_DONOTREDEFINE
 #define read readFromSerial
 #define write writeToSerial
-#define select selectSerial
 #define open openSerial
 #define close closeSerial
+#endif
+
+// ssize_t
+#if SIZE_MAX == UINT_MAX
+typedef int ssize_t;        /* common 32 bit case */
+#define SSIZE_MIN  INT_MIN
+#define SSIZE_MAX  INT_MAX
+#elif SIZE_MAX == ULONG_MAX
+typedef long ssize_t;       /* linux 64 bits */
+#define SSIZE_MIN  LONG_MIN
+#define SSIZE_MAX  LONG_MAX
+#elif SIZE_MAX == ULLONG_MAX
+typedef long long ssize_t;  /* windows 64 bits */
+#define SSIZE_MIN  LLONG_MIN
+#define SSIZE_MAX  LLONG_MAX
 #endif
 
 //Serial options - Linux -> Windows
@@ -177,11 +191,10 @@ int cfsetspeed(struct termios * termios_p, speed_t speed);
 
 //Write/Read/Open/Close/Select Functions
 
-int selectSerial(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
-int readFromSerial(int fd, char* buffer, int count);
-int writeToSerial(int fd, char* buffer, int count);
-int openSerial(char* portname, int opt);
-int closeSerial(int fd);
+ssize_t read_serial(int fd, char* buffer, size_t count);
+ssize_t write_serial(int fd, char* buffer, size_t count);
+int open_serial(const char* portname, int opt);
+int close_serial(int fd);
 
 //get Handle out of the COM structure
 HANDLE getHandle();

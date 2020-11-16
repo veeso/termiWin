@@ -19,9 +19,13 @@
 *
 */
 
+#ifdef _WIN32
+
 #ifndef TERMIOS_H
 #define TERMIOS_H
 
 #include "termiWin.h"
 
-#endif
+#endif // TERMIOS_H
+
+#endif // _WIN32

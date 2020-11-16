@@ -423,19 +423,7 @@ int cfsetspeed(struct termios* termios_p, speed_t speed) {
   return 0;
 }
 
-int selectSerial(int nfds, fd_set* readfds, fd_set* writefds, fd_set* exceptfds, struct timeval* timeout) {
-
-  SetCommMask(com.hComm, EV_RXCHAR);
-  DWORD dwEventMask;
-  WaitCommEvent(com.hComm, &dwEventMask, NULL);
-
-  if (dwEventMask == EV_RXCHAR)
-    return com.fd;
-  else
-    return -1;
-}
-
-int readFromSerial(int fd, char* buffer, int count) {
+ssize_t read_serial(int fd, char* buffer, size_t count) {
 
   if (fd != com.fd) return -1;
   int rc = 0;
@@ -449,7 +437,7 @@ int readFromSerial(int fd, char* buffer, int count) {
     return rc;
 }
 
-int writeToSerial(int fd, char* buffer, int count) {
+ssize_t write_serial(int fd, char* buffer, size_t count) {
 
   if (fd != com.fd) return -1;
   int rc = 0;
@@ -463,7 +451,7 @@ int writeToSerial(int fd, char* buffer, int count) {
     return rc;
 }
 
-int openSerial(char* portname, int opt) {
+int open_serial(const char* portname, int opt) {
 
   if (strlen(portname) < 4) return -1;
 
@@ -513,7 +501,7 @@ int openSerial(char* portname, int opt) {
   return com.fd;
 }
 
-int closeSerial(int fd) {
+int close_serial(int fd) {
 
   int ret = CloseHandle(com.hComm);
   if (ret != 0)
