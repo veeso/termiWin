@@ -524,7 +524,7 @@ int serial_select(int nfds, fd_set* readfds, fd_set* writefds, fd_set* exceptfds
   } else {
     if (readfds) {
       // Clear file descriptor if event is not RXCHAR
-      FD_CLR(readfds);
+      FD_CLR(com.fd, readfds);
     }
   }
   // NOTE: write event not detectable!
