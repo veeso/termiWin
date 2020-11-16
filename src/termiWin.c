@@ -28,7 +28,7 @@
 typedef struct COM {
   HANDLE hComm;
   int fd; //Actually it's completely useless
-  char* port;
+  char port[128];
 } COM;
 
 DCB SerialParams = { 0 }; //Initializing DCB structure
@@ -455,11 +455,13 @@ int open_serial(const char* portname, int opt) {
 
   if (strlen(portname) < 4) return -1;
 
+  // Set to zero
+  memset(com.port, 0x00, 128);
+
   //COMxx
   size_t portSize = 0;
   if (strlen(portname) > 4) {
     portSize = sizeof(char) * strlen("\\\\.\\COM10") + 1;
-    com.port = calloc(1, portSize);
 #ifdef _MSC_VER
     strncat_s(com.port, portSize, "\\\\.\\", strlen("\\\\.\\"));
 #else
@@ -469,7 +471,6 @@ int open_serial(const char* portname, int opt) {
   //COMx
   else {
     portSize = sizeof(char) * 5;
-    com.port = calloc(1, portSize);
   }
 
 #ifdef _MSC_VER
@@ -477,6 +478,7 @@ int open_serial(const char* portname, int opt) {
 #else
   strncat(com.port, portname, 4);
 #endif
+  com.port[portSize] = 0x00;
 
   switch (opt) {
 
