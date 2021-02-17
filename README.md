@@ -1,6 +1,6 @@
 # termiWin
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Stars](https://img.shields.io/github/stars/ChristianVisintin/termiWin.svg)](https://github.com/ChristianVisintin/termiWin) [![Issues](https://img.shields.io/github/issues/ChristianVisintin/termiWin.svg)](https://github.com/ChristianVisintin/termiWin) [![Build](https://api.travis-ci.org/ChristianVisintin/termiWin.svg?branch=master)](https://travis-ci.org/github/ChristianVisintin/termiWin)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Stars](https://img.shields.io/github/stars/veeso/termiWin.svg)](https://github.com/veeso/termiWin) [![Issues](https://img.shields.io/github/issues/veeso/termiWin.svg)](https://github.com/veeso/termiWin) [![Build](https://api.travis-ci.org/veeso/termiWin.svg?branch=master)](https://travis-ci.org/github/veeso/termiWin)
 
 ~ A termios porting for Windows ~
 
@@ -44,6 +44,8 @@ Current Version 1.2.1 (16/11/2020)
   - [Changelog](#changelog)
   - [License](#license)
 
+---
+
 ## Introduction
 
 termiWin is a library which purpose is to allow you to use on a Windows system, the same code used in Linux to communicate with a device through a serial port.
@@ -61,6 +63,15 @@ It's enough to include termios.h, termiWin.h and termiWin.c to build the project
   - Not tested, if you want you can report a working build on an older compiler. I will appreciate your contribution.
 - **MinGW**
   - Requires ```-D TERMIWIN_DONOTREDEFINE``` to build (which means that open, close, select etc must be replaced with openSerial, closeSerial, ...), but works fine afterall and it's used on my travis configuration
+
+### Build with cmake
+
+Once you are in the project root, run:
+
+```sh
+cmake .. -G "MinGW Makefiles" -DTERMIWIN_DONOTREDEFINE=yes -DCMAKE_SH="CMAKE_SH-NOTFOUND"
+mingw32-make
+```
 
 ## Library Architecture
 
