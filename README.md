@@ -124,7 +124,7 @@ Since there’s no way to implement them in Windows, they have asbolutely no eff
 
 #### Output modes flags
 
-Since there’s no way to implement them in Windows, they have asbolutely no effect using termiWin, but you can keep the same you use in Linux for compatibilty.
+Since there’s no way to implement them in Windows, they have absolutely no effect using termiWin, but you can keep the same you use in Linux for compatibilty.
 
 #### Special character array
 
