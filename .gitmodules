@@ -1,0 +1,4 @@
+[submodule "cmake/thirdParty/Boilerplate"]
+	path = cmake/thirdParty/Boilerplate
+	url = https://github.com/KOLANICH-libs/Boilerplate.cmake
+	branch = master
