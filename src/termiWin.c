@@ -22,6 +22,17 @@
 #include "termiWin.h"
 
 #ifdef _WIN32
+
+#ifdef __cplusplus > 201711L
+  #define TERMIWIN_MAYBE_UNUSED [[maybe_unused]]
+#else
+  #ifdef __GNUC__
+    #define TERMIWIN_MAYBE_UNUSED __attribute__((unused))
+  #else
+    #define TERMIWIN_MAYBE_UNUSED
+  #endif
+#endif
+
 #include <fcntl.h>
 #include <stdlib.h>
 
@@ -167,17 +178,17 @@ int getControlOptions(tcflag_t flag) {
 
 //LIBFUNCTIONS
 
-int tcgetattr(int fd, struct termios* termios_p) {
+int tcgetattr(int fd, struct termios* TERMIWIN_MAYBE_UNUSED termios_p) {
 
   if (fd != com.fd) return -1;
-  int ret = 0;
+  int TERMIWIN_MAYBE_UNUSED ret = 0;
 
   ret = GetCommState(com.hComm, &SerialParams);
 
   return 0;
 }
 
-int tcsetattr(int fd, int optional_actions, const struct termios* termios_p) {
+int tcsetattr(int fd, int TERMIWIN_MAYBE_UNUSED optional_actions, const struct termios* termios_p) {
 
   if (fd != com.fd) return -1;
   int ret = 0;
@@ -186,7 +197,7 @@ int tcsetattr(int fd, int optional_actions, const struct termios* termios_p) {
   tcflag_t iflag = termios_p->c_iflag;
   tcflag_t lflag = termios_p->c_lflag;
   tcflag_t cflag = termios_p->c_cflag;
-  tcflag_t oflag = termios_p->c_oflag;
+  tcflag_t TERMIWIN_MAYBE_UNUSED oflag = termios_p->c_oflag;
 
   //iflag
 
@@ -200,9 +211,9 @@ int tcsetattr(int fd, int optional_actions, const struct termios* termios_p) {
   }
 
   //lflag
-  int EchoOpt = getEchoOptions(lflag);
-  int l_opt = getLocalOptions(lflag);
-  int tostop = getToStop(lflag);
+  int TERMIWIN_MAYBE_UNUSED EchoOpt = getEchoOptions(lflag);
+  int TERMIWIN_MAYBE_UNUSED l_opt = getLocalOptions(lflag);
+  int TERMIWIN_MAYBE_UNUSED tostop = getToStop(lflag);
 
   //Missing parameters...
 
@@ -305,7 +316,7 @@ int tcsetattr(int fd, int optional_actions, const struct termios* termios_p) {
     return -1;
 }
 
-int tcsendbreak(int fd, int duration) {
+int tcsendbreak(int fd, int TERMIWIN_MAYBE_UNUSED duration) {
 
   if (fd != com.fd) return -1;
 
@@ -388,36 +399,36 @@ int tcflow(int fd, int action) {
     return -1;
 }
 
-void cfmakeraw(struct termios* termios_p) {
+void cfmakeraw(struct termios* TERMIWIN_MAYBE_UNUSED termios_p) {
 
   SerialParams.ByteSize = 8;
   SerialParams.StopBits = ONESTOPBIT;
   SerialParams.Parity = NOPARITY;
 }
 
-speed_t cfgetispeed(const struct termios* termios_p) {
+speed_t cfgetispeed(const struct termios* TERMIWIN_MAYBE_UNUSED termios_p) {
 
   return SerialParams.BaudRate;
 }
 
-speed_t cfgetospeed(const struct termios* termios_p) {
+speed_t cfgetospeed(const struct termios* TERMIWIN_MAYBE_UNUSED termios_p) {
 
   return SerialParams.BaudRate;
 }
 
-int cfsetispeed(struct termios* termios_p, speed_t speed) {
+int cfsetispeed(struct termios* TERMIWIN_MAYBE_UNUSED termios_p, speed_t speed) {
 
   SerialParams.BaudRate = speed;
   return 0;
 }
 
-int cfsetospeed(struct termios* termios_p, speed_t speed) {
+int cfsetospeed(struct termios* TERMIWIN_MAYBE_UNUSED termios_p, speed_t speed) {
 
   SerialParams.BaudRate = speed;
   return 0;
 }
 
-int cfsetspeed(struct termios* termios_p, speed_t speed) {
+int cfsetspeed(struct termios* TERMIWIN_MAYBE_UNUSED termios_p, speed_t speed) {
 
   SerialParams.BaudRate = speed;
   return 0;
@@ -503,7 +514,7 @@ int open_serial(const char* portname, int opt) {
   return com.fd;
 }
 
-int close_serial(int fd) {
+int close_serial(int TERMIWIN_MAYBE_UNUSED fd) {
 
   int ret = CloseHandle(com.hComm);
   if (ret != 0)
@@ -512,7 +523,7 @@ int close_serial(int fd) {
     return -1;
 }
 
-int select_serial(int nfds, fd_set* readfds, fd_set* writefds, fd_set* exceptfds, struct timeval* timeout) {
+int select_serial(int TERMIWIN_MAYBE_UNUSED nfds, fd_set* readfds, fd_set* TERMIWIN_MAYBE_UNUSED writefds, fd_set* TERMIWIN_MAYBE_UNUSED exceptfds, struct timeval* TERMIWIN_MAYBE_UNUSED timeout) {
 
   SetCommMask(com.hComm, EV_RXCHAR);
   DWORD dwEventMask;
