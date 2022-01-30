@@ -8,8 +8,10 @@ Current Version 1.2.1 (16/11/2020)
 
 - [termiWin](#termiwin)
   - [Introduction](#introduction)
+  - [Project status ⚠️](#project-status-️)
   - [Implementation](#implementation)
   - [Supported Build Platform](#supported-build-platform)
+    - [Build with cmake](#build-with-cmake)
   - [Library Architecture](#library-architecture)
     - [The termios Structure](#the-termios-structure)
       - [Input modes flags](#input-modes-flags)
@@ -50,6 +52,35 @@ Current Version 1.2.1 (16/11/2020)
 
 termiWin is a library which purpose is to allow you to use on a Windows system, the same code used in Linux to communicate with a device through a serial port.
 This is possible because termios’s functions have been rewritten to be compatible with Windows’s COM functions.
+
+---
+
+## Project status ⚠️
+
+I'm no longer working on this project, so this should be considered as an abandoned project.
+Feel free to fork it, but please, consider that even forking this project should be considered wrong, and here's why:
+
+First of all, I think this project is just wrong. I've implemented this in 2017, when I had just started my career as a dev, and many things have changed since then, even the way I see software. At the time I saw no issue with something like termiwin, but now, personally, I think termiwin is a huge mistake, I even feel ashamed for implementing it. It is so far from my idea of how software should work, that I just feel bad every time someone stars this project. Portings are a cool thing, but termiwin is not a porting. It's just a copy-paste of some linux headers and "pray it works and be thankful to the creator of the world if it runs on your machine".
+
+> why didn't you fix it to make it good, then?
+
+Well, I tried at least, but it's just not possible. If there is not a porting of termios out there for windows, it's because there cannot be one. I/O on linux is so much different from how I/O is managed on Windows, that this thing cannot just work. I felt so smart when I implemented this like
+
+> I'm so cool yo, I'm the only one who wrote a porting of termios for Windows
+
+Do you think MinGW devs are stupid? No, they're F not.
+
+In addition to this, I have just no interest in this project:
+
+1. First of all, I've moved away from C/C++ development, thanks, god. You should do it too.
+2. I've developed software for Windows once in my lifetime and I promised myself that I would never do this. Do you know what Windows is good for? Playing videogames. And not because games run fine there, but just because the game producers, won't develop games for other platforms. If I didn't play games, I wouldn't even use Windows. When I develop on Windows, I'm on a terminal running WSL all the time. So I don't even think of developing on this damned operaring system again.
+3. I've got many other projects that received much more interest from the community.
+
+> TL;DR
+> I won't work on this project anymore. Stop asking me to solve your issue, because I won't be able to.
+> I hate Windows.
+
+---
 
 ## Implementation
 
