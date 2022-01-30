@@ -73,7 +73,7 @@ Do you think MinGW devs are stupid? No, they're F not.
 In addition to this, I have just no interest in this project:
 
 1. First of all, I've moved away from C/C++ development, thanks, god. You should do it too.
-2. I've developed software for Windows once in my lifetime and I promised myself that I would never do this. Do you know what Windows is good for? Playing videogames. And not because games run fine there, but just because the game producers, won't develop games for other platforms. If I didn't play games, I wouldn't even use Windows. When I develop on Windows, I'm on a terminal running WSL all the time. So I don't even think of developing on this damned operaring system again.
+2. I've developed software for Windows once in my lifetime and I promised myself that I would never do this. Do you know what Windows is good for? Playing videogames. And not because games run fine there, but just because the game producers, won't develop games for other platforms. If I didn't play games, I wouldn't even use Windows. When I develop on Windows, I'm on a terminal running WSL all the time. So I don't even think of developing on this damned operating system again.
 3. I've got many other projects that received much more interest from the community.
 
 > TL;DR
