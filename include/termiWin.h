@@ -18,6 +18,7 @@
 *   along with termiWin.  If not, see <http://www.gnu.org/licenses/>.
 *
 */
+#pragma once
 
 #ifndef TERMIWIN_H_
 #define TERMIWIN_H_
