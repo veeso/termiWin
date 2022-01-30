@@ -62,16 +62,17 @@ int getByte(tcflag_t flag, int nbyte, int nibble) {
 
 //INPUT FUNCTIONS
 
+enum{
+  i_IXOFF = 0x01,
+  i_IXON = 0x02,
+  i_IXOFF_IXON = 0x03,
+  i_PARMRK = 0x04,
+  i_PARMRK_IXOFF = 0x05,
+  i_PARMRK_IXON = 0x06,
+  i_PARMRK_IXON_IXOFF = 0x07
+};
+
 int getIXOptions(tcflag_t flag) {
-
-#define i_IXOFF 0x01
-#define i_IXON 0x02
-#define i_IXOFF_IXON 0x03
-#define i_PARMRK 0x04
-#define i_PARMRK_IXOFF 0x05
-#define i_PARMRK_IXON 0x06
-#define i_PARMRK_IXON_IXOFF 0x07
-
   int byte = getByte(flag, 1, 1);
 
   return byte;
@@ -79,55 +80,58 @@ int getIXOptions(tcflag_t flag) {
 
 //LOCALOPT FUNCTIONS
 
+enum{
+  l_NOECHO = 0x00,
+  l_ECHO = 0x01,
+  l_ECHO_ECHOE = 0x03,
+  l_ECHO_ECHOK = 0x05,
+  l_ECHO_ECHONL = 0x09,
+  l_ECHO_ECHOE_ECHOK = 0x07,
+  l_ECHO_ECHOE_ECHONL = 0x0b,
+  l_ECHO_ECHOE_ECHOK_ECHONL = 0x0f,
+  l_ECHO_ECHOK_ECHONL = 0x0d,
+  l_ECHOE = 0x02,
+  l_ECHOE_ECHOK = 0x06,
+  l_ECHOE_ECHONL = 0x0a,
+  l_ECHOE_ECHOK_ECHONL = 0x0e,
+  l_ECHOK = 0x04,
+  l_ECHOK_ECHONL = 0x0c,
+  l_ECHONL = 0x08
+};
+
 int getEchoOptions(tcflag_t flag) {
-
-#define l_NOECHO 0x00
-#define l_ECHO 0x01
-#define l_ECHO_ECHOE 0x03
-#define l_ECHO_ECHOK 0x05
-#define l_ECHO_ECHONL 0x09
-#define l_ECHO_ECHOE_ECHOK 0x07
-#define l_ECHO_ECHOE_ECHONL 0x0b
-#define l_ECHO_ECHOE_ECHOK_ECHONL 0x0f
-#define l_ECHO_ECHOK_ECHONL 0x0d
-#define l_ECHOE 0x02
-#define l_ECHOE_ECHOK 0x06
-#define l_ECHOE_ECHONL 0x0a
-#define l_ECHOE_ECHOK_ECHONL 0x0e
-#define l_ECHOK 0x04
-#define l_ECHOK_ECHONL 0x0c
-#define l_ECHONL 0x08
-
   int byte = getByte(flag, 1, 1);
   return byte;
 }
 
+enum{
+  l_ICANON = 0x10,
+  l_ICANON_ISIG = 0x50,
+  l_ICANON_IEXTEN = 0x30,
+  l_ICANON_NOFLSH = 0x90,
+  l_ICANON_ISIG_IEXTEN = 0x70,
+  l_ICANON_ISIG_NOFLSH = 0xd0,
+  l_ICANON_IEXTEN_NOFLSH = 0xb0,
+  l_ICANON_ISIG_IEXTEN_NOFLSH = 0xf0,
+  l_ISIG = 0x40,
+  l_ISIG_IEXTEN = 0x60,
+  l_ISIG_NOFLSH = 0xc0,
+  l_ISIG_IEXTEN_NOFLSH = 0xe0,
+  l_IEXTEN = 0x20,
+  l_IEXTEN_NOFLSH = 0xa0,
+  l_NOFLSH = 0x80,
+};
+
 int getLocalOptions(tcflag_t flag) {
-
-#define l_ICANON 0x10
-#define l_ICANON_ISIG 0x50
-#define l_ICANON_IEXTEN 0x30
-#define l_ICANON_NOFLSH 0x90
-#define l_ICANON_ISIG_IEXTEN 0x70
-#define l_ICANON_ISIG_NOFLSH 0xd0
-#define l_ICANON_IEXTEN_NOFLSH 0xb0
-#define l_ICANON_ISIG_IEXTEN_NOFLSH 0xf0
-#define l_ISIG 0x40
-#define l_ISIG_IEXTEN 0x60
-#define l_ISIG_NOFLSH 0xc0
-#define l_ISIG_IEXTEN_NOFLSH 0xe0
-#define l_IEXTEN 0x20
-#define l_IEXTEN_NOFLSH 0xa0
-#define l_NOFLSH 0x80
-
   int byte = getByte(flag, 1, 0);
   return byte;
 }
 
+enum{
+  l_TOSTOP = 0x01
+};
+
 int getToStop(tcflag_t flag) {
-
-#define l_TOSTOP 0x01
-
   int byte = getByte(flag, 1, 1);
   return byte;
 }
@@ -163,15 +167,16 @@ int getCharSet(tcflag_t flag) {
   }
 }
 
+enum{
+  c_ALL_ENABLED = 0xd0,
+  c_PAREVEN_CSTOPB = 0x50,
+  c_PAREVEN_NOCSTOPB = 0x40,
+  c_PARODD_NOCSTOPB = 0xc0,
+  c_NOPARENB_CSTOPB = 0x10,
+  c_ALL_DISABLED = 0x00,
+};
+
 int getControlOptions(tcflag_t flag) {
-
-#define c_ALL_ENABLED 0xd0
-#define c_PAREVEN_CSTOPB 0x50
-#define c_PAREVEN_NOCSTOPB 0x40
-#define c_PARODD_NOCSTOPB 0xc0
-#define c_NOPARENB_CSTOPB 0x10
-#define c_ALL_DISABLED 0x00
-
   int byte = getByte(flag, 1, 0);
   return byte;
 }
