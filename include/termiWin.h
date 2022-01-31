@@ -32,9 +32,16 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <winsock2.h>
+
+#ifdef _MSC_VER
 #pragma comment(lib, "Ws2_32.lib")
+#endif
 
 /*Redefining functions from winsock to termiWin. This is very important since winsock2 defines functions such as close as closesocket we have to redefine it*/
+
+#ifdef __MINGW32__
+#define TERMIWIN_DONOTREDEFINE
+#endif
 
 #ifndef TERMIWIN_DONOTREDEFINE
 #define read read_serial
@@ -44,19 +51,18 @@
 #define select select_serial
 #endif
 
+#if !defined(SSIZE_MAX)
 // ssize_t
 #if SIZE_MAX == UINT_MAX
 typedef int ssize_t;        /* common 32 bit case */
-#define SSIZE_MIN  INT_MIN
 #define SSIZE_MAX  INT_MAX
 #elif SIZE_MAX == ULONG_MAX
 typedef long ssize_t;       /* linux 64 bits */
-#define SSIZE_MIN  LONG_MIN
 #define SSIZE_MAX  LONG_MAX
 #elif SIZE_MAX == ULLONG_MAX
 typedef long long ssize_t;  /* windows 64 bits */
-#define SSIZE_MIN  LLONG_MIN
 #define SSIZE_MAX  LLONG_MAX
+#endif
 #endif
 
 //Serial options - Linux -> Windows
